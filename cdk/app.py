@@ -66,15 +66,16 @@ class FrontendService(core.Stack):
 
         self.fargate_load_balanced_service = aws_ecs_patterns.ApplicationLoadBalancedFargateService(
             self, "FrontendFargateLBService",
-            service_name='ecsdemo-frontend',
             cluster=self.base_platform.ecs_cluster,
             cpu=256,
             memory_limit_mib=512,
-            desired_count=1,
+            desired_count=3,
+            #desired_count=1,
             public_load_balancer=True,
             cloud_map_options=self.base_platform.sd_namespace,
             task_image_options=self.fargate_task_image
         )
+
         
         self.fargate_load_balanced_service.task_definition.add_to_task_role_policy(
             aws_iam.PolicyStatement(
